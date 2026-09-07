@@ -1,3 +1,8 @@
 # Доступы — никогда не коммитить
 *.local.md
 publish-credentials*
+
+# Данные клиентов — не место в репозитории
+audits/
+documents/
+output/

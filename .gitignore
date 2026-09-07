@@ -1,0 +1,3 @@
+# Доступы — никогда не коммитить
+*.local.md
+publish-credentials*

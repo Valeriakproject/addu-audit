@@ -41,7 +41,7 @@
 
 ## Где сохраняются отчёты
 
-`landing_page_audit/audits/{YYYY-MM-DD}-lp-audit-{client-slug}.md`
+`audits/{домен}/findings-{YYYY-MM-DD}.md`
 
 Скриншоты — в `audits/{client-slug}-assets/`.
 

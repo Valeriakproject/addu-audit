@@ -151,7 +151,7 @@ description: Провести быстрый (1-2 часа) CRO-аудит од�
 **Где сохранять отчёт:**
 
 Рабочий черновик (источник правды, база наработок):
-- Путь: `landing_page_audit/audits/{YYYY-MM-DD}-lp-audit-{client-slug}.md`
+- Путь: `audits/{домен}/findings-{YYYY-MM-DD}.md`
 - Markdown, складывается в `audits/` внутри скилла. Скриншоты — в `audits/{client-slug}-assets/`.
 
 Клиентская выдача — **самодостаточный HTML в едином дизайне** (стиль Notion + брендинг addu.ru):

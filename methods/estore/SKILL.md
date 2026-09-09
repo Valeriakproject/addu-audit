@@ -143,7 +143,7 @@ description: Провести полноценный CPO-аудит (Conversion 
 **Где сохранять отчёт:**
 
 Рабочий черновик (источник правды, база наработок):
-- Путь: `estore-audit/audits/{YYYY-MM-DD}-cpo-audit-{client-slug}.md`
+- Путь: `audits/{домен}/findings-{YYYY-MM-DD}.md`
 - Markdown, складывается в `audits/` внутри скилла — референс для следующих работ, формулировки.
 - Рабочий черновик держать в Markdown, не в docx.
 

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!--
+  ЕДИНЫЙ ШАБЛОН АУДИТА (тёплый светлый стиль addu.ru, эталон — 152-ФЗ аудиты).
+  Используется всеми скиллами аудитов: multi-page-cro-audit, estore-audit, landing_page_audit.
+  КАК ПОЛЬЗОВАТЬСЯ:
+  1. Скопируй этот файл в output/{slug}/index.html нужного аудита.
+  2. Заполни плейсхолдеры {{...}} в <head>, <header> и блоке «Контакт по проекту».
+  3. В <script> опиши данные аудита JS-массивами и напиши render-функции для своих вкладок.
+  4. Логотип addu.ru уже встроен (base64). Менять брендинг и палитру НЕ нужно.
+  ПРАВИЛА (см. design-system.md): тёплый светлый фон, янтарный акцент #f6a21a, без неона/фиолета/
+  тёмной темы, без эмодзи в заголовках, без фейковых браузерных рамок. Крупные мягкие скругления
+  (12–18px), карточки-находки с бейджами серьёзности, hero + сводка-карточки в начале.
+-->
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ЗАГОЛОВОК: напр. CRO-аудит · example.ru}}</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #ffffff; --card: #ffffff; --panel: #faf7f2; --soft2: #f3f6f7; --border: #e7e2da;
+  --text: #202124; --muted: #68707a; --white: #1f1d1a;
+  --accent: #f6a21a; --accentD: #fff3dc;
+  --red: #b34035; --redD: #fee6e2; --orange: #9a6713; --orangeD: #fff3dc;
+  --blue: #275d91; --blueD: #e8f1ff; --grey: #4f5963; --greyD: #eef0f1;
+  --green: #2d6b57; --greenD: #e2efe9;
+  /* алиасы для обратной совместимости со старыми render-функциями */
+  --cyan: #275d91; --cyanD: #e8f1ff; --teal: #2d6b57; --purple: #6940a5; --pink: #ad1a72;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.mono { font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; }
+a { color: var(--blue); }
+
+.header { background: var(--card); border-bottom: 1px solid var(--border); padding: 28px 24px 0; }
+.brand-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; max-width: 1100px; margin: 0 auto 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.brand-logo { height: 32px; width: auto; max-width: 160px; object-fit: contain; display: block; }
+.brand-contact { text-align: right; line-height: 1.35; }
+.brand-label { font-size: 11px; color: var(--muted); font-weight: 500; }
+.brand-phone { font-size: 15px; color: var(--white); font-weight: 600; text-decoration: none; letter-spacing: -0.01em; }
+
+/* HERO — крупный вводный блок с мягким тёплым градиентом (как в 152-ФЗ) */
+.hero { max-width: 1100px; margin: 0 auto 18px; padding: 28px 30px; border: 1px solid var(--border); border-radius: 18px; background: linear-gradient(135deg, #fffaf1 0%, #ffffff 54%, #f6f9fa 100%); }
+.eyebrow { color: var(--orange); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.hero h1 { font-size: 34px; font-weight: 700; color: var(--white); line-height: 1.1; letter-spacing: -0.02em; max-width: 720px; }
+.hero .desc { font-size: 14px; color: #3b4046; margin-top: 12px; max-width: 740px; }
+.header-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; max-width: 1100px; margin: 0 auto; }
+.header-row .sub { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.stats { display: flex; gap: 8px; }
+.stat { text-align: center; padding: 8px 16px; border-radius: 10px; }
+.stat .n { font-size: 20px; font-weight: 700; }
+.stat .l { font-size: 9px; font-weight: 600; letter-spacing: .06em; }
+
+/* Сводка-карточки под hero: статус / что значит / объём */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; max-width: 1100px; margin: 0 auto 6px; }
+.summary-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px 15px; background: var(--card); }
+.summary-card .label { color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+.summary-card .value { font-size: 16px; font-weight: 700; color: var(--white); }
+.summary-card .value.small { font-size: 13px; font-weight: 600; line-height: 1.4; }
+
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); max-width: 1100px; margin: 14px auto 0; overflow-x: auto; padding: 0 24px; }
+.tab { padding: 14px 14px; font-size: 14px; font-weight: 500; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; font-family: inherit; transition: all .15s; margin-bottom: -1px; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--white); border-bottom-color: var(--accent); font-weight: 600; }
+.tab .badge { font-size: 11px; color: var(--muted); background: var(--panel); padding: 1px 7px; border-radius: 20px; margin-left: 6px; font-weight: 500; }
+.tab.active .badge { background: var(--accentD); color: var(--orange); }
+
+.content { padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
+.hidden { display: none !important; }
+.section-title { font-size: 17px; font-weight: 700; margin-bottom: 14px; color: var(--white); }
+.section-sub { font-size: 13px; color: var(--muted); margin: -8px 0 18px; }
+
+.overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.ov-card .label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+.ov-card p { font-size: 14px; line-height: 1.7; }
+.ov-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; gap: 10px; }
+.ov-row span:last-child { color: var(--muted); text-align: right; }
+
+/* «Главная находка» / тёплый callout. Левая полоса — акцентная янтарная. */
+.finding { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: 22px 24px; margin-bottom: 24px; }
+.finding h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+.finding p { font-size: 14px; line-height: 1.8; }
+
+/* Заметка / контекст (нейтральный тёплый блок) */
+.note { padding: 14px 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--border); margin: 12px 0 18px; font-size: 14px; line-height: 1.7; }
+.note p + p { margin-top: 9px; }
+
+/* Карточка-находка в стиле 152-ФЗ: заголовок + бейдж серьёзности справа */
+.issue { border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; background: var(--card); margin-bottom: 10px; }
+.issue-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.issue-title { font-size: 15px; font-weight: 700; color: var(--white); }
+.issue p { font-size: 13.5px; line-height: 1.7; margin-bottom: 6px; }
+.issue p:last-child { margin-bottom: 0; }
+.issue p strong { color: var(--white); }
+
+/* Бейджи серьёзности (пилюли). Критично / Важно / Рекомендуется / Требует проверки. */
+.badge { display: inline-block; flex: 0 0 auto; border-radius: 999px; padding: 4px 9px; font-size: 10.5px; font-weight: 700; white-space: nowrap; letter-spacing: .02em; }
+.badge.critical { background: var(--redD); color: var(--red); }
+.badge.important { background: var(--orangeD); color: var(--orange); }
+.badge.recommend { background: var(--blueD); color: var(--blue); }
+.badge.review { background: var(--greyD); color: var(--grey); }
+
+.problem { display: flex; gap: 12px; align-items: flex-start; padding: 12px 4px; border-bottom: 1px solid var(--border); }
+.problem .pn { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 18px; }
+.problem .text { font-size: 14px; line-height: 1.6; }
+.sev { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 999px; letter-spacing: .04em; white-space: nowrap; flex-shrink: 0; }
+.sev-c { color: var(--red); background: var(--redD); }
+.sev-h { color: var(--orange); background: var(--orangeD); }
+.sev-m { color: var(--blue); background: var(--blueD); }
+.sev-r { color: var(--grey); background: var(--greyD); }
+
+.callout { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-top: 20px; font-size: 14px; line-height: 1.7; }
+.callout b { color: var(--white); }
+.scorebar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.scorebar .sc { flex: 1; min-width: 140px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.scorebar .sc .who { font-size: 12px; color: var(--muted); }
+.scorebar .sc .val { font-size: 20px; font-weight: 700; color: var(--white); }
+
+.finding-card { padding: 24px 4px; border-bottom: 1px solid var(--border); }
+.finding-card .fc-head { display: flex; align-items: baseline; gap: 12px; }
+.finding-card .fc-num { font-size: 22px; font-weight: 700; color: var(--border); min-width: 30px; }
+.finding-card .fc-title { font-size: 16px; font-weight: 700; color: var(--white); }
+.meta-row { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 12px 0 8px 42px; }
+.meta { font-size: 12px; color: var(--muted); }
+.meta b { color: var(--text); font-weight: 600; }
+.fc-body { margin-left: 42px; }
+.fblock { margin-top: 14px; }
+.fblock-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+.fblock p { font-size: 14px; line-height: 1.7; }
+.complist { list-style: none; }
+.complist li { font-size: 13px; color: var(--text); line-height: 1.6; padding: 4px 0 4px 16px; position: relative; }
+.complist li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
+.steps { list-style: none; }
+.steps li { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.5; }
+.steps li:last-child { border-bottom: none; }
+.steps .h { color: var(--blue); font-weight: 600; white-space: nowrap; }
+.effect { font-size: 13px; color: var(--text); line-height: 1.6; padding: 10px 12px; background: var(--greenD); border-radius: 8px; margin-top: 6px; }
+
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+table.matrix { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 720px; }
+table.matrix th, table.matrix td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+table.matrix th { font-weight: 600; color: var(--white); background: var(--panel); white-space: nowrap; }
+table.matrix td:first-child, table.matrix th:first-child { text-align: left; }
+table.matrix tr:last-child td { border-bottom: none; }
+table.matrix .client { background: #fff8ec; font-weight: 600; }
+table.matrix tr.total td { font-weight: 700; color: var(--white); background: var(--panel); }
+.yes { color: var(--green); font-weight: 700; }
+.no { color: var(--red); font-weight: 700; }
+.part { color: var(--orange); font-weight: 700; }
+
+/* Итоговая стоимость / акцентный итог (как .total в 152-ФЗ) */
+.total { display: flex; justify-content: space-between; gap: 16px; align-items: center; border-radius: 14px; border: 1px solid #f2d49d; background: #fff8ec; padding: 14px 18px; margin: 14px 0 18px; }
+.total strong { font-size: 20px; color: var(--white); }
+
+.progress-row { margin: 14px 0; }
+.progress-label { font-size: 13px; color: var(--text); margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-label span:last-child { color: var(--muted); }
+.progress-track { height: 12px; background: var(--panel); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 6px; }
+
+.incl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+.incl-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.incl-card .label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+.incl-card ul { list-style: none; }
+.incl-card li { font-size: 13px; line-height: 1.5; padding: 5px 0 5px 18px; position: relative; }
+.incl-card li::before { content: '·'; position: absolute; left: 4px; color: var(--accent); font-weight: 700; }
+
+/* Контакт по проекту (как в 152-ФЗ — конкретный человек) */
+.contact-block { max-width: 1100px; margin: 32px auto 0; padding: 0 24px; }
+.contact-inner { border: 1px solid var(--border); border-radius: 14px; background: var(--soft2); padding: 16px 18px; }
+.contact-inner .cb-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+.contact-inner p { font-size: 14px; line-height: 1.6; }
+
+.footer { max-width: 1100px; margin: 32px auto 0; padding: 20px 24px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+.footer a { color: var(--white); font-weight: 600; text-decoration: none; }
+.disclaimer { max-width: 1100px; margin: 0 auto; padding: 0 24px 32px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+@media (max-width: 700px) {
+  .header-row { flex-direction: column; }
+  .brand-bar { flex-direction: column; align-items: flex-start; }
+  .brand-contact { text-align: left; }
+  .hero { padding: 22px; } .hero h1 { font-size: 27px; }
+  .meta-row, .fc-body { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <!-- Брендинг addu.ru — НЕ менять -->
+  <div class="brand-bar">
+    <img class="brand-logo" src="data:image/webp;base64,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" alt="addu.ru — интернет-технологии" />
+    <div class="brand-contact">
+      <div class="brand-label">Аудит подготовило агентство</div>
+      <a class="brand-phone" href="tel:+74951503200">+7 (495) 150-32-00</a>
+    </div>
+  </div>
+
+  <!-- HERO: подзаголовок-тип аудита, домен (H1), описание, счётчики справа -->
+  <div class="hero">
+    <div class="header-row">
+      <div>
+        <div class="eyebrow">{{ТИП АУДИТА: напр. CRO-аудит многостраничного сайта}}</div>
+        <h1>{{ДОМЕН: example.ru}}</h1>
+        <div class="desc">{{ОПИСАНИЕ: ниша · сегмент · город · N страниц · дата}}</div>
+      </div>
+      <!-- Счётчики (опционально): подставь свои метки/числа -->
+      <div class="stats">
+        <div class="stat" style="background:var(--redD)"><div class="n" style="color:var(--red)">0</div><div class="l" style="color:var(--red)">КРИТ</div></div>
+        <div class="stat" style="background:var(--orangeD)"><div class="n" style="color:var(--orange)">0</div><div class="l" style="color:var(--orange)">ВАЖНО</div></div>
+        <div class="stat" style="background:var(--blueD)"><div class="n" style="color:var(--blue)">0</div><div class="l" style="color:var(--blue)">СТОИТ</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Сводка (опционально): статус / что значит / объём работ -->
+  <div class="summary-grid">
+    <div class="summary-card"><div class="label">Статус</div><div class="value small">{{короткий вывод}}</div></div>
+    <div class="summary-card"><div class="label">Что это значит</div><div class="value small">{{1 фраза}}</div></div>
+    <div class="summary-card"><div class="label">Объём работ</div><div class="value">{{N часов / N правок}}</div></div>
+  </div>
+</div>
+
+<!-- Вкладки: первая active. data-tab связывает кнопку с div#t-{id} -->
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="overview">Резюме</button>
+  <!-- <button class="tab" data-tab="findings">Находки <span class="badge">N</span></button> -->
+  <!-- добавь вкладки под свой тип аудита -->
+</div>
+
+<!-- Контент вкладок. Первая видима, остальные .hidden. Можно рендерить из JS. -->
+<div class="content" id="t-overview">
+  <!-- Заполни: note (контекст), issue-карточки с бейджами, finding (главная находка), .problem, callout, total -->
+</div>
+<!-- <div class="content hidden" id="t-findings"></div> -->
+
+<!-- Контакт по проекту (брендинг addu.ru — НЕ менять данные) -->
+<section class="contact-block">
+  <div class="contact-inner">
+    <div class="cb-label">Контакт по проекту</div>
+    <p>
+      <strong>Иван Меньшов</strong><br>
+      Исполнительный директор интернет-агентства Addu.ru<br>
+      Телефон: <a href="tel:+74951503200">+7 (495) 150-32-00</a><br>
+      Email: <a href="mailto:sales@addu.ru">sales@addu.ru</a>
+    </p>
+  </div>
+</section>
+
+<div class="footer">
+  <span>Addu · аудит и доработка сайтов · <a href="https://addu.ru" target="_blank">addu.ru</a></span>
+  <span style="margin-left:auto"><a href="tel:+74951503200">+7 (495) 150-32-00</a></span>
+</div>
+<div class="disclaimer">{{ДИСКЛЕЙМЕР: методология, оговорки про отсутствие доступа к аналитике и т.п.}}</div>
+
+<script>
+// Хелпер для бейджей серьёзности: c=КРИТ(красный), h=ВАЖНО(оранжевый), m=СТОИТ(синий), r=ПРОВЕРИТЬ(серый).
+function sevTag(l){ const m={c:['sev-c','КРИТ'],h:['sev-h','ВАЖНО'],m:['sev-m','СТОИТ'],r:['sev-r','ПРОВЕРИТЬ']}; const [c,t]=m[l]||['','—']; return `<span class="sev ${c}">${t}</span>`; }
+// Хелпер для пилюль-бейджей карточек .issue (стиль 152-ФЗ).
+function badge(l){ const m={c:['critical','Критично'],h:['important','Важно'],m:['recommend','Рекомендуется'],r:['review','Требует проверки']}; const [c,t]=m[l]||['review','—']; return `<span class="badge ${c}">${t}</span>`; }
+// Хелпер для ячеек матрицы: 'y'→+ (зелёный), 'n'→— (красный), 'p'→± (оранжевый), иначе текст.
+function mark(v){ return v==='y'?'<span class="yes">+</span>': v==='n'?'<span class="no">—</span>': v==='p'?'<span class="part">±</span>': v; }
+
+// 1) Опиши данные аудита здесь (массивы/объекты).
+// 2) Напиши render-функции, заполняющие div#t-{id}.innerHTML.
+// 3) Вызови их в конце (см. ниже).
+
+// Переключение вкладок (универсальное). Перечисли id своих вкладок в TABS:
+const TABS = ['overview'/*, 'findings', ... */];
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.onclick = ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const id = tab.dataset.tab;
+    TABS.forEach(t=>document.getElementById('t-'+t).classList.toggle('hidden', t!==id));
+    // if(id==='findings') renderFindings(); ...
+  };
+});
+// Первичный рендер всех вкладок:
+// renderFindings(); renderComp(); ...
+</script>
+</body>
+</html>

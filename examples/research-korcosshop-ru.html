@@ -5,140 +5,203 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Маркетинговое исследование — KorCos Shop</title>
 <style>
-@page { size: A4; margin: 15mm 14mm; }
-:root{--ink:#202124;--muted:#68707a;--line:#e7e2da;--paper:#fff;--soft:#faf7f2;--soft2:#f3f6f7;--accent:#f6a21a;--accent-soft:#fff3dc;--danger:#b34035;--warn:#9a6713;--ok:#2d6b57}
+@page { size:A4; margin:14mm 12mm; }
+:root{
+  --ink:#241f19; --text:#332d26; --muted:#6b6259;
+  --amber:#f6a21a; --amber-dark:#b8760c; --amber-deep:#8a5a08;
+  --mist:#fdf6ea; --line:#e7e2da; --paper:#fff; --bg:#efe9e0;
+  --ok:#2d6b57; --ok-bg:#e4f1ea; --grey-bg:#eceae6;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:var(--paper);font-size:12.5px;line-height:1.55}
-.page{max-width:840px;margin:0 auto;padding:0 10px 40px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px;padding-top:18px}
-.brand img{display:block;height:46px;max-width:190px;object-fit:contain}
-.meta{text-align:right;color:var(--muted);font-size:11.5px;line-height:1.45}
-.meta a{color:#275d91;font-weight:700;text-decoration:none}
-.meta a:hover{text-decoration:underline}
-.hero{padding:26px 28px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#fffaf1 0%,#fff 54%,#f6f9fa 100%);margin-bottom:18px}
-.eyebrow{color:var(--warn);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-h1{margin:0;max-width:660px;font-size:29px;line-height:1.1}
-.lead{max-width:680px;margin:12px 0 0;color:#3b4046;font-size:14px}
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 22px}
-.kpi div{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
-.kpi .l{color:var(--muted);font-size:10.5px;margin-bottom:4px}
-.kpi .v{font-size:17px;font-weight:700;line-height:1.2}
-.kpi .s{color:var(--muted);font-size:10px;margin-top:3px}
-h2{margin:30px 0 12px;font-size:19px;line-height:1.2;padding-top:10px;border-top:2px solid var(--line);scroll-margin-top:12px}
-h3{margin:20px 0 8px;font-size:14.5px;scroll-margin-top:12px}
-h4{margin:14px 0 5px;font-size:13px;color:#3b4046}
-p{margin:0 0 9px}
-ul,ol{margin:8px 0 14px;padding-left:19px}li{margin:4px 0}
-.toc{border:1px solid var(--line);border-radius:14px;background:var(--soft);padding:16px 18px;margin:0 0 22px}
-.toc h3{margin:0 0 10px;font-size:14px}
-.toc ol{columns:2;column-gap:28px;margin:0;padding-left:18px;font-size:12px}
-.toc ol ol{columns:1;padding-left:14px;margin:2px 0 6px;font-size:11.5px}
-.toc a{color:#275d91;text-decoration:none}
-.toc a:hover{text-decoration:underline}
-.toc li{margin:2px 0}
-.note{padding:14px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);margin:10px 0 16px}
-.panel{border:1px solid var(--line);border-radius:14px;background:var(--soft2);padding:14px 16px;margin:12px 0}
-.warn{border:1px solid #f2d49d;background:#fff8ec;border-radius:14px;padding:14px 16px;margin:12px 0}
-table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:11.5px}
-th{text-align:left;color:var(--muted);font-size:10.5px;font-weight:700;border-bottom:1px solid var(--line);padding:8px 7px;vertical-align:bottom}
-td{border-bottom:1px solid var(--line);padding:8px 7px;vertical-align:top}
-tr:last-child td{border-bottom:0}
-.src{color:var(--muted);font-size:10.5px}
-.src a{color:#275d91}
-.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap}
-.t-ok{background:#e4f1ea;color:var(--ok)}.t-est{background:var(--accent-soft);color:var(--warn)}.t-no{background:#eef0f1;color:#4f5963}
-.card{border:1px solid var(--line);border-radius:14px;padding:15px 17px;background:#fff;margin:12px 0}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--text);background:var(--bg);font-family:"Segoe UI",Inter,Arial,sans-serif;font-size:15px;line-height:1.55}
+
+.sitebar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:26px;min-height:56px;
+  padding:0 max(22px,calc((100vw - 1000px)/2));color:#fff;background:rgba(36,31,25,.97);
+  box-shadow:0 6px 24px rgba(36,31,25,.2);backdrop-filter:blur(12px)}
+.sitebar-brand{color:#fff;text-decoration:none;font-weight:800;white-space:nowrap;letter-spacing:-.01em;font-size:15px}
+.sitebar-brand i{color:var(--amber);font-style:normal}
+.sitebar nav{display:flex;align-items:center;gap:17px;overflow:auto;scrollbar-width:none}
+.sitebar nav::-webkit-scrollbar{display:none}
+.sitebar nav a{color:#ddd3c6;text-decoration:none;font-size:13px;white-space:nowrap}
+.sitebar nav a:hover{color:var(--amber)}
+.sitebar-date{margin-left:auto;color:#a99e91;font-size:12px;white-space:nowrap}
+
+.report{width:min(1000px,calc(100% - 30px));margin:24px auto 40px;background:var(--paper);box-shadow:0 14px 50px rgba(36,31,25,.15)}
+
+.cover{min-height:1000px;padding:80px 70px 56px;display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;background:linear-gradient(145deg,#fff 0%,#fff 62%,var(--mist) 100%)}
+.cover:before{content:"";position:absolute;top:-130px;right:-180px;width:500px;height:500px;
+  border:70px solid rgba(246,162,26,.12);border-radius:50%}
+.cover:after{content:"";position:absolute;right:70px;bottom:110px;width:200px;height:11px;background:var(--amber);border-radius:8px}
+.cover-logo{position:relative;z-index:1;margin-bottom:40px}
+.cover-logo img{height:52px;max-width:200px;object-fit:contain;display:block}
+.eyebrow{margin:0 0 28px;color:var(--amber-deep);font-size:13px;letter-spacing:.11em;font-weight:800;text-transform:uppercase}
+.cover h1{max-width:740px;margin:0;color:var(--ink);font-size:54px;line-height:1.04;letter-spacing:-.03em}
+.subtitle{max-width:680px;margin:26px 0 0;color:var(--muted);font-size:21px;line-height:1.38}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:60px;position:relative;z-index:1}
+.metric{border-top:4px solid var(--amber);padding:16px 14px 18px;background:rgba(255,255,255,.9)}
+.metric strong{display:block;color:var(--ink);font-size:24px;line-height:1.1}
+.metric span{display:block;margin-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
+.cover-meta{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px;position:relative;z-index:1}
+.cover-meta b{color:var(--ink)}
+.cover-meta a{color:var(--amber-dark);font-weight:700;text-decoration:none}
+
+.toc{padding:58px 70px 64px;border-bottom:1px solid var(--line)}
+.toc h2{margin:0 0 26px;border:0;padding:0;font-size:32px}
+.toc-grid{columns:2;column-gap:44px}
+.toc a{display:flex;gap:10px;align-items:baseline;color:var(--text);text-decoration:none;break-inside:avoid}
+.toc a:hover{color:var(--amber-dark)}
+.toc a b{flex:1;border-bottom:1px dotted #c7bdb0;font-weight:400}
+.toc-major{margin:13px 0 5px;font-weight:750}
+.toc-minor{margin:3px 0 3px 14px;color:var(--muted);font-size:12.5px}
+
+main{padding:54px 70px 76px}
+h2,h3,h4{color:var(--ink);break-after:avoid}
+h2{margin:52px 0 18px;padding-top:16px;border-top:5px solid var(--amber);font-size:30px;line-height:1.15;letter-spacing:-.02em;scroll-margin-top:70px}
+h2:first-child{margin-top:0}
+h3{margin:32px 0 11px;font-size:20px;line-height:1.25;scroll-margin-top:70px}
+h4{margin:24px 0 8px;font-size:16px}
+p{margin:0 0 12px;orphans:3;widows:3}
+strong,b{color:var(--ink)}
+a{color:var(--amber-dark);text-underline-offset:2px}
+ul,ol{margin:10px 0 20px;padding-left:25px}
+li{margin:6px 0}
+
+table{width:100%;margin:18px 0 24px;border-collapse:collapse;font-size:13px;line-height:1.4}
+thead{display:table-header-group}
+tr{break-inside:avoid}
+th{padding:10px 9px;text-align:left;color:#fff;background:var(--ink);font-weight:700;vertical-align:top;font-size:12.5px}
+td{padding:9px;border:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even) td{background:#faf8f5}
+
+.note{margin:22px 0;padding:20px 24px;background:var(--mist);border-left:5px solid var(--amber)}
+.note ol{margin:0;padding-left:22px}
+.warn{margin:22px 0;padding:18px 22px;background:var(--mist);border:1px solid #f0d9a8;border-left:5px solid var(--amber)}
+.panel{margin:20px 0;padding:18px 22px;background:#f7f5f1;border:1px solid var(--line)}
+.card{margin:18px 0;padding:20px 24px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--amber)}
 .card h3{margin-top:0}
-.comp{border:1px solid var(--line);border-radius:14px;padding:15px 17px;margin:14px 0;background:#fff}
+.comp{margin:20px 0;padding:20px 24px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--ink)}
 .comp h3{margin-top:0}
-.comp .role{font-size:11px;font-weight:400;color:var(--muted)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.contact{margin-top:18px;padding:15px 17px;border-radius:14px;border:1px solid var(--line);background:var(--soft2)}
-.disc{margin-top:18px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:#fbfbfb;color:#565f68;font-size:10.5px}
-.final{border:2px solid #f2d49d;background:#fff8ec;border-radius:16px;padding:18px 20px;margin:16px 0}
-footer{margin-top:26px;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:10.5px}
-@media (max-width:680px){.kpi{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.toc ol{columns:1}}
-@media print{.card,.comp,.panel,.warn,.disc,.contact,.final,.hero,table{break-inside:avoid}}
+.comp .role{font-size:13px;font-weight:400;color:var(--muted)}
+.final{margin:26px 0;padding:26px 28px;background:linear-gradient(125deg,#241f19,#4a3a22 70%,var(--amber-deep));color:#f3ece1}
+.final b,.final strong{color:#fff}
+.contact{margin:26px 0 0;padding:20px 24px;background:#f7f5f1;border:1px solid var(--line)}
+.contact h3{margin-top:0}
+.disc{margin:22px 0 0;padding:18px 22px;background:#faf9f7;border:1px solid var(--line);color:#5c554d;font-size:12.5px;line-height:1.5}
+.src{color:var(--muted);font-size:12.5px}
+.tag{display:inline-block;border-radius:3px;padding:2px 7px;font-size:11px;font-weight:700;white-space:nowrap}
+.t-ok{background:var(--ok-bg);color:var(--ok)}
+.t-est{background:#fdefd4;color:var(--amber-deep)}
+.t-no{background:var(--grey-bg);color:#6b6259}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+svg{max-width:100%;height:auto}
+footer{padding:22px 70px 30px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;background:#faf9f7}
+
+@media (max-width:820px){
+  .cover{padding:48px 26px 40px;min-height:auto}
+  .cover h1{font-size:36px}
+  .subtitle{font-size:17px}
+  .metrics{grid-template-columns:repeat(2,1fr);margin-top:36px}
+  .toc,main{padding-left:26px;padding-right:26px}
+  .toc-grid{columns:1}
+  .two{grid-template-columns:1fr}
+  footer{padding-left:26px;padding-right:26px}
+  h2{font-size:24px}h3{font-size:18px}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+@media print{
+  body{background:#fff}
+  .sitebar{display:none}
+  .report{width:100%;margin:0;box-shadow:none}
+  .cover{min-height:auto;padding:40px 0 30px;break-after:page}
+  .toc{padding:0 0 30px;break-after:page}
+  main{padding:0}
+  footer{padding:16px 0}
+  .card,.comp,.panel,.warn,.note,.disc,.contact,.final,table{break-inside:avoid}
+}
 </style>
 </head>
 <body>
-<main class="page">
 
-<header class="topbar">
-  <div class="brand"><img src="https://addu.ru/assets/templates/addu/img/logo.webp" alt="Addu"></div>
-  <div class="meta"><div>9 сентября 2026</div><div><a href="https://korcosshop.ru/" target="_blank" rel="noopener">korcosshop.ru</a></div></div>
-</header>
+<div class="sitebar">
+  <a class="sitebar-brand" href="#top">Addu<i>.</i>ru</a>
+  <nav>
+    <a href="#rezume">Резюме</a>
+    <a href="#rynok">Рынок</a>
+    <a href="#konkurenty">Конкуренты</a>
+    <a href="#podrobno">Разбор</a>
+    <a href="#avatary">Аватары</a>
+    <a href="#audit">Аудит</a>
+    <a href="#segmenty">Сегменты</a>
+    <a href="#plan">План</a>
+    <a href="#riski">Риски</a>
+    <a href="#itog">Итог</a>
+  </nav>
+  <span class="sitebar-date">9 сентября 2026</span>
+</div>
 
-<section class="hero">
-  <div class="eyebrow">Маркетинговое исследование</div>
-  <h1>KorCos Shop: рынок, конкуренты и план роста</h1>
-  <p class="lead">Корейская косметика, интернет-магазин, Москва и доставка по России. Исследование собрано по открытым источникам: сайт и каталог, сайты и карточки товаров пяти конкурентов, таможенная статистика и отраслевые публикации. Внутренние данные компании не запрашивались.</p>
+<div class="report" id="top">
+
+<section class="cover">
+  <div>
+    <div class="cover-logo"><img src="https://addu.ru/assets/templates/addu/img/logo.webp" alt="Addu"></div>
+    <div class="eyebrow">Маркетинговое исследование</div>
+    <h1>KorCos Shop: рынок, конкуренты и план роста</h1>
+    <p class="subtitle">Корейская косметика, интернет-магазин, Москва и доставка по России. Собрано по открытым источникам, без данных компании.</p>
+    <div class="metrics">
+      <div class="metric"><strong>$254,1 млн</strong><span>Импорт косметики из Кореи в РФ, янв–июль 2026, +21%</span></div>
+      <div class="metric"><strong>74–93 млрд ₽</strong><span>Оценка ниши в рознице за год, расчёт в разделе 1.3</span></div>
+      <div class="metric"><strong>5</strong><span>Прямых конкурентов разобрано подробно</span></div>
+      <div class="metric"><strong>1 : 1</strong><span>Цены совпадают с лидером ниши на флагманах</span></div>
+    </div>
+  </div>
+  <div class="cover-meta">
+    <div><b>Кому:</b> KorCos Shop · <a href="https://korcosshop.ru/" target="_blank" rel="noopener">korcosshop.ru</a></div>
+    <div><b>Подготовило:</b> агентство Addu.ru · 9 сентября 2026</div>
+  </div>
 </section>
 
-<section class="kpi">
-  <div><div class="l">Импорт косметики из Кореи в РФ</div><div class="v">$254,1 млн</div><div class="s">янв–июль 2026, +21% к 2025</div></div>
-  <div><div class="l">Ниша в рознице, оценка</div><div class="v">74–93 млрд ₽</div><div class="s">в год, расчёт в разделе 1.3</div></div>
-  <div><div class="l">Разобрано конкурентов</div><div class="v">5</div><div class="s">прямых, тот же сегмент</div></div>
-  <div><div class="l">Цены против лидера</div><div class="v">1 : 1</div><div class="s">совпадают на флагманах</div></div>
+<section class="toc">
+  <h2>Содержание</h2>
+  <div class="toc-grid">
+    <a class="toc-major" href="#blok-a"><b>Данные компании</b></a>
+    <a class="toc-major" href="#rezume"><b>Резюме</b></a>
+    <a class="toc-major" href="#rynok"><b>1. Рынок</b></a>
+    <a class="toc-minor" href="#r-granicy"><b>1.1. Границы</b></a>
+    <a class="toc-minor" href="#r-dinamika"><b>1.2. Динамика 2024–2026</b></a>
+    <a class="toc-minor" href="#r-emkost"><b>1.3. Ёмкость ниши</b></a>
+    <a class="toc-minor" href="#r-trendy"><b>1.4. Структура спроса и тренды</b></a>
+    <a class="toc-minor" href="#r-sezon"><b>1.5. Сезонность</b></a>
+    <a class="toc-major" href="#konkurenty"><b>2. Конкуренты</b></a>
+    <a class="toc-minor" href="#k-metodika"><b>2.1. Методика выбора</b></a>
+    <a class="toc-minor" href="#k-svodnoe"><b>2.2. Сводное сравнение</b></a>
+    <a class="toc-minor" href="#k-probely"><b>2.3. Три рыночных пробела</b></a>
+    <a class="toc-major" href="#podrobno"><b>3. Подробный разбор конкурентов</b></a>
+    <a class="toc-major" href="#avatary"><b>4. Клиентские аватары</b></a>
+    <a class="toc-major" href="#audit"><b>5. Аудит текущего маркетинга</b></a>
+    <a class="toc-minor" href="#a-sohranit"><b>5.1. Что сохранить и усилить</b></a>
+    <a class="toc-minor" href="#a-nerabotaet"><b>5.2. Что сейчас не работает</b></a>
+    <a class="toc-minor" href="#a-poterya"><b>5.3. Главная точка потери</b></a>
+    <a class="toc-minor" href="#a-bystrye"><b>5.4. Быстрые действия на 30 дней</b></a>
+    <a class="toc-major" href="#segmenty"><b>6. Топ-3 сегмента роста</b></a>
+    <a class="toc-minor" href="#s-gipotezy"><b>6.1. Гипотезы по четырём осям</b></a>
+    <a class="toc-minor" href="#s-matrica"><b>6.2. Матрица приоритетов</b></a>
+    <a class="toc-major" href="#plan"><b>7. План на три месяца</b></a>
+    <a class="toc-minor" href="#p-pozicionirovanie"><b>7.1. Позиционирование</b></a>
+    <a class="toc-minor" href="#p-kpi"><b>7.2. Определения показателей</b></a>
+    <a class="toc-minor" href="#p-mesyacy"><b>7.3. Месяцы 1–3</b></a>
+    <a class="toc-minor" href="#p-byudzhet"><b>7.4. Бюджетные сценарии</b></a>
+    <a class="toc-major" href="#riski"><b>8. Риски и валидация</b></a>
+    <a class="toc-minor" href="#ri-kritika"><b>8.1. Критика плана</b></a>
+    <a class="toc-minor" href="#ri-pyat"><b>8.2. Пять первых действий</b></a>
+    <a class="toc-minor" href="#ri-fakty"><b>8.3. Проверка фактов</b></a>
+    <a class="toc-minor" href="#ri-zapros"><b>8.4. Что запросить у компании</b></a>
+    <a class="toc-major" href="#itog"><b>Итоговое решение</b></a>
+  </div>
 </section>
 
-<nav class="toc">
-  <h3>Содержание</h3>
-  <ol>
-    <li><a href="#blok-a">Данные компании</a></li>
-    <li><a href="#rezume">Резюме</a></li>
-    <li><a href="#rynok">Рынок</a>
-      <ol>
-        <li><a href="#r-granicy">Границы</a></li>
-        <li><a href="#r-dinamika">Динамика 2024–2026</a></li>
-        <li><a href="#r-emkost">Ёмкость ниши</a></li>
-        <li><a href="#r-trendy">Структура спроса и тренды</a></li>
-        <li><a href="#r-sezon">Сезонность</a></li>
-      </ol>
-    </li>
-    <li><a href="#konkurenty">Конкуренты</a>
-      <ol>
-        <li><a href="#k-metodika">Методика выбора</a></li>
-        <li><a href="#k-svodnoe">Сводное сравнение</a></li>
-        <li><a href="#k-probely">Три рыночных пробела</a></li>
-      </ol>
-    </li>
-    <li><a href="#podrobno">Подробный разбор конкурентов</a></li>
-    <li><a href="#avatary">Клиентские аватары</a></li>
-    <li><a href="#audit">Аудит текущего маркетинга</a>
-      <ol>
-        <li><a href="#a-sohranit">Что сохранить и усилить</a></li>
-        <li><a href="#a-nerabotaet">Что сейчас не работает</a></li>
-        <li><a href="#a-poterya">Главная точка потери покупателей</a></li>
-        <li><a href="#a-bystrye">Быстрые действия на 30 дней</a></li>
-      </ol>
-    </li>
-    <li><a href="#segmenty">Топ-3 сегмента роста</a>
-      <ol>
-        <li><a href="#s-gipotezy">Гипотезы по четырём осям</a></li>
-        <li><a href="#s-matrica">Матрица приоритетов</a></li>
-      </ol>
-    </li>
-    <li><a href="#plan">План на три месяца</a>
-      <ol>
-        <li><a href="#p-pozicionirovanie">Позиционирование</a></li>
-        <li><a href="#p-kpi">Определения показателей</a></li>
-        <li><a href="#p-mesyacy">Месяцы 1–3</a></li>
-        <li><a href="#p-byudzhet">Бюджетные сценарии</a></li>
-      </ol>
-    </li>
-    <li><a href="#riski">Риски и валидация</a>
-      <ol>
-        <li><a href="#ri-kritika">Критика плана</a></li>
-        <li><a href="#ri-pyat">Пять первых действий</a></li>
-        <li><a href="#ri-fakty">Проверка фактов</a></li>
-        <li><a href="#ri-zapros">Что запросить у компании</a></li>
-      </ol>
-    </li>
-    <li><a href="#itog">Итоговое решение</a></li>
-  </ol>
-</nav>
-
+<main>
 <h2 id="blok-a">Данные компании</h2>
 <p>Собрано из открытых источников. Строки со статусом <span class="tag t-no">нет данных</span> закрываются только самой компанией.</p>
 <table>
@@ -522,7 +585,7 @@ footer{margin-top:26px;padding-top:10px;border-top:1px solid var(--line);color:v
     <tr><td><b>С платным трафиком</b></td><td>Рабочий сценарий плюс бюджет на тесты рекламы, если своего трафика для проверки гипотез не хватает.</td><td><b>+150–250 тыс ₽</b></td><td>Если органики мало и ждать поиска нельзя</td></tr>
   </tbody>
 </table>
-<p class="src">Ориентир по объёму работ при ставке 3 000 ₽/час. Разброс зависит от состояния сайта и от того, сколько делается своими силами. Уточняется после доступа к сайту.</p>
+<p class="src">Ориентировочные вложения в реализацию плана. Разброс зависит от состояния сайта и от того, какую часть работ вы закрываете своими силами.</p>
 
 <h2 id="riski">8. Риски, ограничения и валидация</h2>
 
@@ -587,7 +650,9 @@ footer{margin-top:26px;padding-top:10px;border-top:1px solid var(--line);color:v
   <b>Как собрано это исследование.</b> Использованы только открытые источники: сайт и каталог korcosshop.ru, сайты и карточки товаров пяти конкурентов, статистика Корейской таможенной службы в изложении деловых изданий, отраслевые публикации о косметическом рынке России. Данные компании не запрашивались и не использовались. Цифры рынка отражают импорт и объём рынка в целом, а не розничные продажи в нише: публичной оценки для последних не существует, наша приведена как расчёт с открытыми допущениями. Выводы, помеченные как гипотезы, требуют проверки. Исследование не является финансовым прогнозом и не гарантирует результата: оно показывает, где искать рост и что проверить в первую очередь.
 </div>
 
-<footer>Addu · исследования и аудиты · addu.ru · 9 сентября 2026</footer>
 </main>
+
+<footer>Addu · маркетинговые исследования и аудиты · <a href="https://addu.ru">addu.ru</a> · +7 (495) 150-32-00 · 9 сентября 2026</footer>
+</div>
 </body>
 </html>

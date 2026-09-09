@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Аудит сайта by.addu.ru по требованиям 152-ФЗ</title>
+  <style>
+    @page { size: A4; margin: 16mm 15mm; }
+    :root {
+      --ink: #202124; --muted: #68707a; --line: #e7e2da; --paper: #ffffff;
+      --soft: #faf7f2; --soft-2: #f3f6f7; --accent: #f6a21a; --accent-soft: #fff3dc;
+      --danger: #b34035; --warn: #9a6713; --ok: #2d6b57;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, Arial, Helvetica, sans-serif; color: var(--ink); background: var(--paper); font-size: 12.5px; line-height: 1.48; }
+    .page { max-width: 780px; margin: 0 auto; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 26px; }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 150px; font-weight: 700; font-size: 18px; }
+    .brand img { display: block; height: 34px; max-width: 150px; object-fit: contain; }
+    .meta { text-align: right; color: var(--muted); font-size: 11px; line-height: 1.35; }
+    .hero { padding: 26px 28px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(135deg, #fffaf1 0%, #ffffff 54%, #f6f9fa 100%); margin-bottom: 18px; break-inside: avoid; }
+    .eyebrow { color: var(--warn); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    h1 { margin: 0; max-width: 620px; font-size: 30px; line-height: 1.08; letter-spacing: 0; }
+    .lead { max-width: 640px; margin: 12px 0 0; color: #3b4046; font-size: 14px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 24px; break-inside: avoid; }
+    .summary-card { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: #ffffff; }
+    .summary-card .label { color: var(--muted); font-size: 10.5px; margin-bottom: 4px; }
+    .summary-card .value { font-size: 15px; font-weight: 700; }
+    .summary-card .value.small { font-size: 13px; line-height: 1.35; }
+    h2 { margin: 24px 0 10px; font-size: 18px; line-height: 1.2; }
+    h3 { margin: 16px 0 7px; font-size: 14px; line-height: 1.25; }
+    p { margin: 0 0 9px; }
+    ul { margin: 8px 0 14px; padding-left: 18px; }
+    li { margin: 3px 0; }
+    .note { padding: 13px 15px; border-radius: 12px; background: var(--soft); border: 1px solid var(--line); margin: 10px 0 16px; }
+    .penalty-block { padding: 14px 16px; border-radius: 14px; background: #fff8ec; border: 1px solid #f2d49d; margin: 10px 0 16px; break-inside: avoid; }
+    .penalty-block h3, .contact-block h3 { margin-top: 0; }
+    .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0 16px; padding: 0; list-style: none; }
+    .checklist li { margin: 0; padding: 10px 11px; border-radius: 11px; border: 1px solid var(--line); background: #ffffff; break-inside: avoid; }
+    .findings { display: grid; gap: 10px; margin: 10px 0 18px; }
+    .finding { border: 1px solid var(--line); border-radius: 14px; padding: 14px 15px; background: #ffffff; break-inside: avoid; }
+    .finding-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .finding-title { font-size: 14px; font-weight: 700; }
+    .badge { display: inline-block; flex: 0 0 auto; border-radius: 999px; padding: 4px 8px; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
+    .critical { background: #fee6e2; color: var(--danger); }
+    .important { background: var(--accent-soft); color: var(--warn); }
+    .recommend { background: #e8f1ff; color: #275d91; }
+    .review { background: #eef0f1; color: #4f5963; }
+    .muted { color: var(--muted); }
+    .panel { border: 1px solid var(--line); border-radius: 14px; background: var(--soft-2); padding: 14px 15px; break-inside: avoid; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 11.5px; break-inside: avoid; }
+    th { text-align: left; color: var(--muted); font-size: 10.5px; font-weight: 700; border-bottom: 1px solid var(--line); padding: 8px 7px; }
+    td { border-bottom: 1px solid var(--line); padding: 8px 7px; vertical-align: top; }
+    tr:last-child td { border-bottom: 0; }
+    .total { display: flex; justify-content: space-between; gap: 16px; align-items: center; border-radius: 14px; border: 1px solid #f2d49d; background: #fff8ec; padding: 14px 16px; margin: 12px 0 18px; break-inside: avoid; }
+    .total strong { font-size: 18px; }
+    .total.discount { border-color: #bcdcc9; background: #eef7f1; }
+    .total.discount strong { color: #2d6b57; }
+    .disclaimer { margin-top: 18px; padding: 14px 15px; border-radius: 14px; border: 1px solid var(--line); background: #fbfbfb; color: #565f68; font-size: 10.5px; break-inside: avoid; }
+    .contact-block { margin-top: 16px; padding: 15px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--soft-2); break-inside: avoid; }
+    footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10.5px; }
+    @media print { .hero, .summary-card, .finding, .panel, .total, .disclaimer, .penalty-block, .contact-block { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <img src="https://addu.ru/assets/templates/addu/img/logo.webp" alt="Addu">
+      </div>
+      <div class="meta">
+        <div>7 сентября 2026</div>
+        <div>https://by.addu.ru/</div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Технический аудит сайта</div>
+      <h1>Аудит сайта по требованиям 152-ФЗ</h1>
+      <p class="lead">Техническая проверка открытой части сайта и план доработок. Проверили документы, формы, согласия, cookies и видимые внешние сервисы. Ниже — короткий вывод, что стоит поправить и сколько это займёт.</p>
+    </section>
+
+    <section class="summary-grid">
+      <div class="summary-card">
+        <div class="label">Статус</div>
+        <div class="value small">Средний риск: оформление начато, нужна доработка</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Что это значит</div>
+        <div class="value small">Сайт собирает заявки. Политика и обязательная галочка есть, но нет отдельного согласия и cookie-уведомления, а один из сервисов не раскрыт.</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Объём работ</div>
+        <div class="value">3 часа</div>
+      </div>
+    </section>
+
+    <section class="note">
+      <p>В открытой части сайта уже сделана важная база: опубликована содержательная «Политика обработки персональных данных», однозначно указан оператор (ООО «Эдд-Ю»), у форм стоит обязательная галочка, а ссылка на политику есть в подвале. Это заметно лучше типовой ситуации.</p>
+      <p>Что стоит поправить до того, как формы продолжат собирать заявки, — три момента: у форм нет отдельного «Согласия на обработку персональных данных» (с 01.09.2025 его оформляют отдельно от политики), на сайте нет cookie-уведомления, хотя работает сервис коллтрекинга Roistat, и сам этот сервис не раскрыт в политике. Все доработки технические — документы, ссылки, формулировки и cookie-уведомление — без редизайна.</p>
+    </section>
+
+    <section>
+      <h2>Почему это важно</h2>
+      <div class="penalty-block">
+        <h3>Штрафы 2025 года</h3>
+        <p>С 2025 года штрафы за нарушения в области персональных данных стали заметно выше. Для юридических лиц по ст. 13.11 КоАП РФ возможны, в частности:</p>
+        <ul>
+          <li>до 300 000 ₽ — за невыполнение или несвоевременное выполнение обязанности уведомить Роскомнадзор о намерении обрабатывать персональные данные;</li>
+          <li>до 700 000 ₽ — за обработку персональных данных без надлежащего согласия, когда оно требуется;</li>
+          <li>до 15 000 000 ₽ — за утечку обычных персональных данных в крупном объёме;</li>
+          <li>до 20 000 000 ₽ — за утечку биометрических персональных данных;</li>
+          <li>до 500 000 000 ₽ — в отдельных повторных случаях с оборотными штрафами.</li>
+        </ul>
+      </div>
+      <p>Если сайт собирает формы, звонки, заявки, подписки или использует cookies — у него должны быть корректно оформлены документы и механика согласия. Практически это значит:</p>
+      <ul class="checklist">
+        <li>отдельная «Политика обработки персональных данных»;</li>
+        <li>отдельное «Согласие на обработку персональных данных»;</li>
+        <li>согласие и ссылки рядом с каждой формой;</li>
+        <li>отдельное согласие на рекламу/рассылки, если они есть;</li>
+        <li>cookie-уведомление и раскрытие аналитики и внешних сервисов;</li>
+        <li>стабильные ссылки на документы в подвале сайта.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Что проверили</h2>
+      <ul>
+        <li>Главную страницу и подвал сайта.</li>
+        <li>Страницу «Политика обработки персональных данных» (<span class="muted">/policy</span>).</li>
+        <li>Две формы сбора заявок: обратная связь/консультация и «Рассчитать стоимость».</li>
+        <li>Наличие cookie-уведомления и раздела о cookies в политике.</li>
+        <li>Внешние сервисы и трекеры, загружаемые на сайте.</li>
+        <li>Технические основы: HTTPS, отправка форм, передача данных в адресе страницы.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Что нашли</h2>
+      <div class="findings">
+
+        <article class="finding">
+          <div class="finding-head">
+            <div class="finding-title">Нет отдельного «Согласия на обработку персональных данных»</div>
+            <span class="badge important">Важно</span>
+          </div>
+          <p><strong>Что увидели:</strong> у обеих форм стоит обязательная галочка с текстом «Нажимая кнопку, вы соглашаетесь с нашей политикой…» и ссылкой только на политику. Отдельного документа «Согласие на обработку персональных данных» на сайте нет.</p>
+          <p><strong>Почему важно:</strong> с 01.09.2025 согласие на обработку данных оформляют отдельно от политики и как активное действие пользователя. Согласиться с политикой — это ознакомление, а не согласие на обработку.</p>
+          <p><strong>Что поправить:</strong> создать страницу «Согласие на обработку персональных данных»; у форм заменить формулировку на активную («Я даю согласие на обработку моих персональных данных») и добавить ссылки и на политику, и на согласие.</p>
+          <p class="muted">Оценка: 1 час / 2 500 ₽</p>
+        </article>
+
+        <article class="finding">
+          <div class="finding-head">
+            <div class="finding-title">Нет cookie-уведомления, при этом работает Roistat</div>
+            <span class="badge important">Важно</span>
+          </div>
+          <p><strong>Что увидели:</strong> на сайте нет уведомления об использовании cookies. При этом подключён сервис Roistat (коллтрекинг и аналитика), который устанавливает cookies и обрабатывает номера телефонов.</p>
+          <p><strong>Почему важно:</strong> при использовании cookies и аналитики сайт должен уведомлять пользователя и давать ссылку на раздел о cookies — этого требует прозрачность обработки и рекомендации Роскомнадзора.</p>
+          <p><strong>Что поправить:</strong> добавить cookie-уведомление со ссылкой на политику; подключить его в шаблоне, чтобы показывалось на всех страницах.</p>
+          <p class="muted">Оценка: 15 минут / 625 ₽</p>
+        </article>
+
+        <article class="finding">
+          <div class="finding-head">
+            <div class="finding-title">В политике не раскрыты все внешние сервисы</div>
+            <span class="badge important">Важно</span>
+          </div>
+          <p><strong>Что увидели:</strong> политика содержит раздел о cookies и упоминает Яндекс, но фактически работающий на сайте Roistat в ней не назван. Список внешних обработчиков неполный.</p>
+          <p><strong>Почему важно:</strong> политика должна раскрывать реально используемые сервисы, которым передаются или через которые обрабатываются данные.</p>
+          <p><strong>Что поправить:</strong> дополнить политику перечнем фактических сервисов (Roistat, аналитика, приём заявок) и актуализировать раздел о cookies.</p>
+          <p class="muted">Оценка: 30 минут / 1 250 ₽</p>
+        </article>
+
+        <article class="finding">
+          <div class="finding-head">
+            <div class="finding-title">Уточнить состав аналитики и маршрут заявок</div>
+            <span class="badge review">Требует уточнения</span>
+          </div>
+          <p><strong>Что увидели:</strong> счётчик Яндекс.Метрики и GTM в открытой разметке не найдены, хотя Яндекс упомянут в политике; заявки с форм уходят на сервер сайта, конечный получатель (CRM/почта) снаружи не виден.</p>
+          <p><strong>Почему важно:</strong> от реального состава трекеров и получателей заявок зависит полнота cookie-раздела и списка обработчиков в документах.</p>
+          <p><strong>Что поправить:</strong> подтвердить, какие счётчики подключены и куда попадают заявки, и отразить это в политике. Уточняется при запуске работ.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3 style="margin-top:0;">Что на сайте уже в порядке</h3>
+      <ul style="margin-bottom:0;">
+        <li>Оператор указан однозначно: ООО «Эдд-Ю», с реквизитами.</li>
+        <li>Опубликована содержательная «Политика обработки персональных данных».</li>
+        <li>Ссылка на политику есть в подвале на всех страницах.</li>
+        <li>Галочка согласия у форм обязательная и не проставлена заранее.</li>
+        <li>Сайт работает по HTTPS, лишних данных формы не запрашивают, данные не передаются в адресе страницы.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>План работ и стоимость</h2>
+      <table>
+        <thead>
+          <tr><th>Работа</th><th>Зачем нужно</th><th>Оценка</th><th>Стоимость</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Отдельная страница «Согласие на обработку персональных данных»</td><td>Требование к оформлению согласия с 01.09.2025</td><td>30 мин</td><td>1 250 ₽</td></tr>
+          <tr><td>Активная формулировка согласия и ссылки (политика + согласие) у обеих форм</td><td>Корректная механика согласия у форм</td><td>30 мин</td><td>1 250 ₽</td></tr>
+          <tr><td>Cookie-уведомление со ссылкой на политику</td><td>Уведомление пользователя об использовании cookies</td><td>15 мин</td><td>625 ₽</td></tr>
+          <tr><td>Раскрытие Roistat и внешних сервисов в политике, актуализация раздела о cookies</td><td>Полное раскрытие реально используемых сервисов</td><td>30 мин</td><td>1 250 ₽</td></tr>
+          <tr><td>Повторная проверка форм, ссылок и уведомления после правок</td><td>Контроль корректности внесённых изменений</td><td>30 мин</td><td>1 250 ₽</td></tr>
+          <tr><td>Финальная заметка по внесённым изменениям</td><td>Фиксация выполненного объёма</td><td>30 мин</td><td>1 250 ₽</td></tr>
+        </tbody>
+      </table>
+      <div class="total">
+        <span>Фиксированная стоимость работ по перечисленному объёму</span>
+        <strong>7 500 ₽</strong>
+      </div>
+      <div class="total discount">
+        <span><strong>При оплате до 10 сентября 2026</strong><br><span class="muted" style="font-size:11px;">Разовое условие для тех, кто решает сразу</span></span>
+        <strong>5 250 ₽</strong>
+      </div>
+      <p class="muted">Срок выполнения: 1–2 рабочих дня после получения доступов и информации для документов. Стоимость покрывает перечисленный технический объём работ. После 10 сентября работы выполняются по полной стоимости.</p>
+    </section>
+
+    <section>
+      <h2>Рекомендуемый следующий шаг</h2>
+      <p>Мы можем закрыть все перечисленные технические правки удалённо: согласуем договор, запросим доступы к сайту и информацию для документов, подготовим тексты политики и согласия, внесём изменения в формы, подвал и cookie-уведомление, после чего повторно проверим сайт.</p>
+    </section>
+
+    <section class="contact-block">
+      <h3>Контакт по проекту</h3>
+      <p style="margin-bottom:0;">
+        Иван Меньшов<br>
+        Исполнительный директор интернет-агентства Addu.ru<br>
+        Телефон: +7 (495) 150-32-00<br>
+        Email: sales@addu.ru
+      </p>
+    </section>
+
+    <section>
+      <h2>Нормативная база</h2>
+      <ul>
+        <li>Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных» — принципы обработки, согласие, обязанности оператора, публикация политики.</li>
+        <li>Федеральный закон от 24.06.2025 № 156-ФЗ — отдельное оформление согласия на обработку персональных данных, действует с 01.09.2025.</li>
+        <li>Рекомендации Роскомнадзора по политике оператора и минимизации обрабатываемых данных.</li>
+        <li>Ст. 13.11 КоАП РФ — административная ответственность за нарушения в области персональных данных.</li>
+      </ul>
+    </section>
+
+    <section class="disclaimer">
+      <strong>Важное ограничение</strong>
+      <p>Настоящий аудит подготовлен как техническая и содержательная проверка открытой части сайта по видимым признакам соответствия требованиям Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» и связанным требованиям к обработке персональных данных на сайте.</p>
+      <p>Addu не является юридической компанией, не оказывает юридические услуги и не выдаёт юридическое заключение. Мы руководствуемся нормами 152-ФЗ, изменениями, вступившими в силу с 01.09.2025 в части отдельного оформления согласия на обработку персональных данных, а также рекомендациями Роскомнадзора по политике обработки персональных данных и минимизации обрабатываемых данных.</p>
+      <p style="margin-bottom:0;">В большинстве типовых случаев предложенных технических правок достаточно, чтобы привести открытую часть сайта к базовому ожидаемому уровню оформления: разместить необходимые документы, добавить корректные ссылки и согласия у форм, раскрыть cookies и внешние сервисы. При этом аудит не заменяет работу профессионального юриста и не гарантирует отсутствие претензий контролирующих органов, поскольку часть вопросов требует проверки внутренних документов, договоров с обработчиками, фактических процессов хранения данных, уведомления Роскомнадзора и иных обстоятельств, не видимых снаружи сайта.</p>
+    </section>
+
+    <footer>
+      Addu · аудит и доработка сайтов · addu.ru
+    </footer>
+  </main>
+</body>
+</html>

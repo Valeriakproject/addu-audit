@@ -40,8 +40,31 @@
 - Зафиксировать значения в находки.
 
 ### 6. Мобильная версия
-- `emulate` или `resize_page` под мобильный (например 390×844).
+- `emulate` или `resize_page` под мобильный — **390×844**.
 - `navigate_page` (или перезагрузка), `take_screenshot` → проверить: нет горизонтального скролла, контент не уезжает, меню/кнопки доступны, tap-targets не слипаются.
+- **Прогнать замеры минимум на четырёх страницах разных шаблонов** (главная, внутренняя, список, страница с таблицей) и записать цифры в находки:
+
+```js
+({ hasViewportMeta: !!document.querySelector('meta[name=viewport]'),
+   layoutWidth: document.documentElement.clientWidth,
+   contentWidth: document.body.scrollWidth,
+   overflowing: [...document.querySelectorAll('*')]
+     .filter(e => e.getBoundingClientRect().right > document.documentElement.clientWidth + 2
+                  && e.getBoundingClientRect().width > 50).length,
+   smallTapTargets: [...document.querySelectorAll('a,button')]
+     .filter(e => { const r = e.getBoundingClientRect(); return r.height > 0 && r.height < 44; }).length })
+```
+
+- ⚠️ **Масштаб считать от ширины макета, а не от ширины содержимого.** Без `meta viewport` браузер
+  телефона берёт макет 980 px и вписывает его в экран: на 390 px масштаб = 390/980 ≈ 0,40.
+  Делить на фактическую ширину содержимого (например 1200) — завышение, его легко оспорить.
+- **Снять пару скриншотов для отчёта: 1280 px и 390 px.** Если MCP недоступен, хватит headless Chrome:
+
+```bash
+chrome --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=8000   --window-size=390,844 --screenshot=mob.png https://site.ru/
+chrome --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=8000   --window-size=1280,900 --screenshot=desk.png https://site.ru/
+```
+
 - Снять console/network на мобильном профиле.
 
 ### 7. Сохранить артефакты
